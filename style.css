@@ -25,6 +25,7 @@ main {
 .after {
   position: relative;
 }
+
 .filter-skills {
   display: flex;
   flex-wrap: wrap;
@@ -110,7 +111,9 @@ hr {
   flex-wrap: wrap;
   /* width: 230px; */
 }
-
+.skills:hover {
+  cursor: pointer;
+}
 .head p {
   font-size: 13px;
   color: rgba(92, 165, 165, 1);
@@ -125,4 +128,8 @@ hr {
   background-color: #eff6f6;
   color: rgba(92, 165, 165, 1);
   border-radius: 10px;
+}
+
+.hidden {
+  display: none;
 }

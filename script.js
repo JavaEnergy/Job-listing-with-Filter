@@ -36,37 +36,6 @@ const jobsHTML = (jobsData) => {
     `;
 
     jobsSection.innerHTML += developerCardHTML;
-
-    // const filterDeveloperCardsByKeyword = (keyword) => {
-    //   const developerCards = document.querySelectorAll(".developer.card");
-    //   developerCards.forEach((card) => {
-    //     const cardSkills = Array.from(
-    //       card.querySelectorAll(".skills .skill")
-    //     ).map((skill) => skill.textContent);
-
-    //     if (
-    //       !keyword ||
-    //       card
-    //         .querySelector(".content .head p")
-    //         .textContent.includes(keyword) ||
-    //       card
-    //         .querySelector(".content .position h1")
-    //         .textContent.includes(keyword) ||
-    //       cardSkills.includes(keyword)
-    //     ) {
-    //       card.style.display = "block";
-    //     } else {
-    //       card.style.display = "none";
-    //     }
-    //   });
-    // };
-
-    // // Event listener for checking keyword presence and filtering cards
-    // const keywordInput = document.querySelector(".filter-skills input"); // Assuming an input field for the keyword
-    // keywordInput.addEventListener("input", (event) => {
-    //   const keyword = event.target.value.trim();
-    //   filterDeveloperCardsByKeyword(keyword);
-    // });
   });
 };
 
@@ -95,9 +64,34 @@ function handleClick(event) {
   // Append the created div to the filter-skills section
   const filterSkillsSection = document.querySelector(".filter-skills");
   filterSkillsSection.appendChild(skillElement);
+
+  // Call the filtering function with the clicked skill
+  filterBySkill(clickedSkill);
 }
 
 // Attach click event listener to each skill div
 skillDivs.forEach((skillDiv) => {
   skillDiv.addEventListener("click", handleClick);
 });
+
+// Filtering function
+function filterBySkill(skill) {
+  const developerCards = document.querySelectorAll(".developer.card");
+
+  developerCards.forEach((card) => {
+    const skillDivs = card.querySelectorAll(".skills .skill");
+    let match = false;
+
+    skillDivs.forEach((skillDiv) => {
+      if (skillDiv.textContent === skill) {
+        match = true;
+      }
+    });
+
+    if (match) {
+      card.style.display = ""; // Show the card if the skill matches
+    } else {
+      card.style.display = "none"; // Hide the card if the skill doesn't match
+    }
+  });
+}
