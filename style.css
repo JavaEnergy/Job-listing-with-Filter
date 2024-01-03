@@ -133,3 +133,7 @@ hr {
 .hidden {
   display: none;
 }
+
+.filt {
+  display: none;
+}

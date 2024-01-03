@@ -41,8 +41,17 @@ const jobsHTML = (jobsData) => {
 
 jobsHTML(data);
 // Get all the skill div elements
+const filtDiv = document.querySelector(".filt");
 const skillDivs = document.querySelectorAll(".skills .skill");
 const arr = []; // Create the array
+
+function toggleFiltDivDisplay() {
+  if (arr.length === 0) {
+    filtDiv.style.display = "none"; // Hide filtDiv if arr is empty
+  } else {
+    filtDiv.style.display = "flex"; // Show filtDiv if arr has at least one element
+  }
+}
 
 function filterBySkills(skills) {
   const developerCards = document.querySelectorAll(".developer.card");
@@ -65,7 +74,9 @@ function filterBySkills(skills) {
       card.style.display = "none"; // Hide the card if it doesn't match any skill
     }
   });
+  toggleFiltDivDisplay();
 }
+
 function handleClick(event) {
   const clickedSkill = event.target.textContent;
 
@@ -101,4 +112,15 @@ function handleClick(event) {
 // Attach click event listener to each skill div
 skillDivs.forEach((skillDiv) => {
   skillDiv.addEventListener("click", handleClick);
+});
+
+const clearButton = document.querySelector(".button-div button");
+
+clearButton.addEventListener("click", () => {
+  arr.length = 0; // Clear the arr by setting its length to 0
+  const filterSkillsSection = document.querySelector(".filter-skills");
+  filterSkillsSection.innerHTML = ""; // Clear the displayed skills elements
+
+  filterBySkills(arr); // Update the cards display after clearing arr
+  toggleFiltDivDisplay(); // Update filtDiv display after clearing arr
 });
