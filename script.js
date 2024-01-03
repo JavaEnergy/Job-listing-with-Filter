@@ -40,58 +40,65 @@ const jobsHTML = (jobsData) => {
 };
 
 jobsHTML(data);
-
 // Get all the skill div elements
 const skillDivs = document.querySelectorAll(".skills .skill");
+const arr = []; // Create the array
 
-// Function to handle click event
+function filterBySkills(skills) {
+  const developerCards = document.querySelectorAll(".developer.card");
+
+  developerCards.forEach((card) => {
+    const cardSkills = card.querySelectorAll(".skills .skill");
+    let showCard = true;
+    if (skills.length > 0) {
+      showCard = false; // If skills array is not empty, initially assume not showing the card
+      cardSkills.forEach((cardSkill) => {
+        if (skills.includes(cardSkill.textContent)) {
+          showCard = true; // If any skill matches, show the card
+        }
+      });
+    }
+
+    if (showCard) {
+      card.style.display = ""; // Show the card if it matches any skill or if skills array is empty
+    } else {
+      card.style.display = "none"; // Hide the card if it doesn't match any skill
+    }
+  });
+}
 function handleClick(event) {
-  // Retrieve the value of the clicked div
   const clickedSkill = event.target.textContent;
 
-  // Do something with the value (for example, log it to the console)
-  console.log(clickedSkill);
+  // Push the clicked skill to the array if it's not already there
+  if (!arr.includes(clickedSkill)) {
+    arr.push(clickedSkill);
+  }
+
+  console.log(arr); // Log the updated array
+
   const skillElement = document.createElement("div");
   skillElement.textContent = clickedSkill;
-  skillElement.classList.add("skill", "after"); // Adding necessary classes
+  skillElement.classList.add("skill", "after");
 
-  // Add event listener to remove the clicked skill if needed
   skillElement.addEventListener("click", () => {
-    skillElement.remove(); // Remove the clicked skill div
-    // Perform any additional actions if required
+    skillElement.remove();
+
+    // Remove the clicked skill from the array
+    const index = arr.indexOf(clickedSkill);
+    if (index !== -1) {
+      arr.splice(index, 1);
+      console.log(arr); // Log the updated array after removal
+      filterBySkills(arr); // Update the card display after skill removal
+    }
   });
 
-  // Append the created div to the filter-skills section
   const filterSkillsSection = document.querySelector(".filter-skills");
   filterSkillsSection.appendChild(skillElement);
 
-  // Call the filtering function with the clicked skill
-  filterBySkill(clickedSkill);
+  filterBySkills(arr); // Filter cards based on the updated array when a skill is added
 }
 
 // Attach click event listener to each skill div
 skillDivs.forEach((skillDiv) => {
   skillDiv.addEventListener("click", handleClick);
 });
-
-// Filtering function
-function filterBySkill(skill) {
-  const developerCards = document.querySelectorAll(".developer.card");
-
-  developerCards.forEach((card) => {
-    const skillDivs = card.querySelectorAll(".skills .skill");
-    let match = false;
-
-    skillDivs.forEach((skillDiv) => {
-      if (skillDiv.textContent === skill) {
-        match = true;
-      }
-    });
-
-    if (match) {
-      card.style.display = ""; // Show the card if the skill matches
-    } else {
-      card.style.display = "none"; // Hide the card if the skill doesn't match
-    }
-  });
-}
