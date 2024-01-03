@@ -137,3 +137,7 @@ hr {
 .filt {
   display: none;
 }
+
+.btn {
+  cursor: pointer;
+}

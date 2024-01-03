@@ -40,10 +40,11 @@ const jobsHTML = (jobsData) => {
 };
 
 jobsHTML(data);
+
 // Get all the skill div elements
 const filtDiv = document.querySelector(".filt");
 const skillDivs = document.querySelectorAll(".skills .skill");
-const arr = []; // Create the array
+const arr = [];
 
 function toggleFiltDivDisplay() {
   if (arr.length === 0) {
@@ -83,30 +84,42 @@ function handleClick(event) {
   // Push the clicked skill to the array if it's not already there
   if (!arr.includes(clickedSkill)) {
     arr.push(clickedSkill);
-  }
 
-  console.log(arr); // Log the updated array
+    console.log(arr); // Log the updated array
 
-  const skillElement = document.createElement("div");
-  skillElement.textContent = clickedSkill;
-  skillElement.classList.add("skill", "after");
+    const existingSkills = document.querySelectorAll(".filter-skills .skill");
+    let skillExists = false;
 
-  skillElement.addEventListener("click", () => {
-    skillElement.remove();
+    existingSkills.forEach((skill) => {
+      if (skill.textContent === clickedSkill) {
+        skillExists = true;
+      }
+    });
 
-    // Remove the clicked skill from the array
-    const index = arr.indexOf(clickedSkill);
-    if (index !== -1) {
-      arr.splice(index, 1);
-      console.log(arr); // Log the updated array after removal
-      filterBySkills(arr); // Update the card display after skill removal
+    if (!skillExists) {
+      const skillElement = document.createElement("div");
+      skillElement.textContent = clickedSkill;
+      skillElement.classList.add("skill", "after");
+
+      skillElement.addEventListener("click", () => {
+        skillElement.remove();
+
+        const index = arr.indexOf(clickedSkill);
+        if (index !== -1) {
+          arr.splice(index, 1);
+          console.log(arr); // Log the updated array after removal
+          filterBySkills(arr); // Update the card display after skill removal
+          toggleFiltDivDisplay();
+        }
+      });
+
+      const filterSkillsSection = document.querySelector(".filter-skills");
+      filterSkillsSection.appendChild(skillElement);
+
+      filterBySkills(arr); // Filter cards based on the updated array when a skill is added
+      toggleFiltDivDisplay();
     }
-  });
-
-  const filterSkillsSection = document.querySelector(".filter-skills");
-  filterSkillsSection.appendChild(skillElement);
-
-  filterBySkills(arr); // Filter cards based on the updated array when a skill is added
+  }
 }
 
 // Attach click event listener to each skill div
