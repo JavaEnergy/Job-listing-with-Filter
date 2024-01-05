@@ -12,27 +12,31 @@ const jobsHTML = (jobsData) => {
     ];
     const skillsHTML = skills
       .filter((skill) => skill) // Remove empty or undefined skills
-      .map((skill) => `<div class="skill">${skill}</div>`)
+      .map((skill) => `<div class="skill name">${skill}</div>`)
       .join("");
     let developerCardHTML = `
-      <div class="developer card">
-        <img src="${job.logo}" alt="" />
-        <div class="content">
-          <div class="head"><p>${job.company}</p></div>
-          <div class="position"><h1>${job.position}</h1></div>
-          <div class="info">
-            <ul class="horizontal-list">
-              <li id="firstLi">${job.postedAt}</li>
-              <li>${job.contract}</li>
-              <li>${job.location}</li>
-            </ul>
-          </div>
-          <hr />
-          <div class="skills">
-          ${skillsHTML}
-        </div>
-        </div>
+<div class="developer card">
+<div class="content">
+  <div class="box1">
+    <img src="${job.logo}" alt="logo" />
+    <div class="box">
+      <div class="head"><p>${job.company}</p></div>
+      <div class="position"><h1>${job.position}</h1></div>
+      <div class="info">
+        <ul class="horizontal-list">
+          <li id="firstLi">${job.postedAt}</li>
+          <li>${job.contract}</li>
+          <li>${job.location}</li>
+        </ul>
       </div>
+      <hr />
+    </div>
+  </div>
+  <div class="skills">
+    ${skillsHTML}
+  </div>
+</div>
+</div>
     `;
 
     jobsSection.innerHTML += developerCardHTML;

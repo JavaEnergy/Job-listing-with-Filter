@@ -30,6 +30,7 @@ main {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
+  cursor: pointer;
 }
 .filt {
   display: flex;
@@ -56,12 +57,13 @@ section button {
   content: url("./images/icon-remove.svg");
   background-color: rgba(92, 165, 165, 1);
   border-radius: 0 4px 4px 0;
-  cursor: pointer;
   position: absolute; /* Position the pseudo-element absolutely */
   top: 50%; /* Adjust vertically */
   transform: translate(12%, -50%);
 }
-
+.after:hover::after {
+  background-color: rgba(43, 57, 57, 1);
+}
 .card {
   box-shadow: 0 15px 20px -5px rgba(13, 113, 130, 0.15);
   background-color: rgba(255, 255, 255, 1);
@@ -123,6 +125,10 @@ hr {
   font-size: 15px;
   padding: 9px 0;
 }
+
+.position h1:hover {
+  cursor: pointer;
+}
 .skill {
   padding: 7px;
   background-color: #eff6f6;
@@ -140,4 +146,33 @@ hr {
 
 .btn {
   cursor: pointer;
+}
+
+.name:hover {
+  background-color: rgba(92, 165, 165, 1);
+  color: #fff;
+}
+@media (min-width: 900px) {
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  hr {
+    display: none;
+  }
+  .developer img {
+    position: relative; /* or any other desired position value */
+    top: auto;
+    transform: none;
+  }
+  .box1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .horizontal-list {
+    padding: 0;
+  }
 }
